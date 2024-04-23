@@ -36,13 +36,9 @@ def getBlocks(jsonRpcEndpoint: str, engine: Engine, blockRange: list[int]):
         result = requests.post(jsonRpcEndpoint, data=body, headers={"Content-Type": "application/json"})
         jsonRes = result.json()
         # check the status code
-        if (result.status_code == 200 and jsonRes):
+        if result.status_code == 200 and jsonRes:
 
             blockObject: dict = jsonRes.get('result')
-
-            block: Block = {}
-            block['blockNumber'] = blockNumberinHex
-            block['hash'] = blockObject.get('hash')
             blockTransactions = []
             for tx in blockObject.get('transactions'):
                 transaction = Transaction(
@@ -60,11 +56,12 @@ def getBlocks(jsonRpcEndpoint: str, engine: Engine, blockRange: list[int]):
                 transactions=blockTransactions
             )
             blocks.append(block)
-        with Session(engine) as session:
-            # persist the blocks to the database
-            session.add_all(blocks)
-            session.commit()
-        print("Done with block: " + str(blockNumber))
+            print("Added block: " + str(blockNumber))
+    with Session(engine) as session:
+        # persist all the blocks at once to the database
+        session.add_all(blocks)
+        session.commit()
+
 
 
 def createModels(engine: Engine):
