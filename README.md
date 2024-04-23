@@ -5,7 +5,7 @@
 For part 1, install all packages in requirements.txt and run the following in the current directory
 
 ```commandline
-python .\blockNode.py <quicknode-url> <postgres-uri> 18908800-18909050
+python .\index.py <quicknode-url> <postgres-uri> 18908800-18909050
 ```
 
 Replace `<quicknode-url>` and `<postgres-uri>` with the values given in the email. (Hidden from public view due to spam)
@@ -43,3 +43,8 @@ The solution is
  Volume               | Block Number 
 ----------------------|--------------
  53883433384695265018 | 18908973     
+
+
+## Tests
+
+Pytest is used for unit testing. Run `python tests/index.py` to run the test suite.

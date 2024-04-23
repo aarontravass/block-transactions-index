@@ -76,6 +76,7 @@ Main function
 def main():
     # read system args from the commandline
     args = sys.argv[1:]
+    print(args)
     if len(args) != 3:
         raise Exception("3 Args should be provided")
     jsonRpcEndpoint = args[0]
@@ -88,7 +89,7 @@ def main():
     blockRange = list(map(int, args[2].split('-')))
     print(blockRange)
     if blockRange[0] > blockRange[1]:
-        raise ValueError("Block Range should be positive")
+        raise ValueError("First block number should be less than second block number")
     # create the database engine to use.
     # here we use postgres as the engine
     engine = createEngine(dbAddress)
@@ -98,4 +99,4 @@ def main():
     getBlocks(jsonRpcEndpoint, engine, blockRange)
 
 
-main()
+
